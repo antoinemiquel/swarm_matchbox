@@ -1,0 +1,15 @@
+{
+  "id": "node3",
+  "name": "etcd Node 3",
+  "profile": "etcd3",
+  "selector": {
+    "mac": "52:54:00:c3:61:77",
+    "os": "installed"
+  },
+  "metadata": {
+    "domain_name": "node3.example.com",
+    "etcd_name": "node3",
+    "etcd_initial_cluster": "node1=http://node1.example.com:2380,node2=http://node2.example.com:2380,node3=http://node3.example.com:2380",
+    "ssh_authorized_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDi3IJeVFD2NprUsloxEDWnefxYlcSnWDiYpuYmxMfeZIRZUHlwuO1ZxFP52AH/BYHoFce26/YlTbgE9rZ7/vhH7Zx09KJpdlZxEF4yZivuI91LK5U0nD5s+uKw3WAfK7SFBkUbw0QULOltYwdJgmanVcgj4T0tKU828cz/vSulWoQezSWeFq6M+7dGnwUWaMxvjvw9qv9rTPTkj4OJJ3XrJyc58P/sea0Xjd6K5RoIG8uneNrZAEnCHC4E0NSjGvdMRhanIiuozJftnncYRAtYi3ti+w2QDnhHYW0Kkg3LBy4jU1spoVNCPWCWzL9/377EzwkZlRv7Dk+NJx0+4F/R antoine@salon81"]
+  }
+}
