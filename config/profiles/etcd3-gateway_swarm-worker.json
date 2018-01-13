@@ -1,6 +1,6 @@
 {
-  "id": "etcd3",
-  "name": "etcd3",
+  "id": "etcd3-gateway_swarm-worker",
+  "name": "Etcd3-gateway Swarm-worker",
   "boot": {
     "kernel": "/assets/coreos/1576.4.0/coreos_production_pxe.vmlinuz",
     "initrd": ["/assets/coreos/1576.4.0/coreos_production_pxe_image.cpio.gz"],
@@ -13,5 +13,5 @@
       "coreos.autologin"
     ]
   },
-  "ignition_id": "etcd3.yaml"
+  "ignition_id": "etcd3-gateway_swarm-worker.yaml"
 }

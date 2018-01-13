@@ -1,7 +1,7 @@
 {
   "id": "node4",
-  "name": "etcd Node 4",
-  "profile": "etcd3",
+  "name": "Node 4",
+  "profile": "etcd3-gateway_swarm-worker",
   "selector": {
     "mac": "52:54:00:d7:99:c7",
     "os": "installed"
@@ -9,7 +9,7 @@
   "metadata": {
     "domain_name": "node4.example.com",
     "etcd_name": "node4",
-    "etcd_initial_cluster": "node1=http://node1.example.com:2380,node2=http://node2.example.com:2380,node3=http://node3.example.com:2380",
+    "etcd_endpoints": "node1.example.com:2379,node2.example.com:2379,node3.example.com:2379",
     "ssh_authorized_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDi3IJeVFD2NprUsloxEDWnefxYlcSnWDiYpuYmxMfeZIRZUHlwuO1ZxFP52AH/BYHoFce26/YlTbgE9rZ7/vhH7Zx09KJpdlZxEF4yZivuI91LK5U0nD5s+uKw3WAfK7SFBkUbw0QULOltYwdJgmanVcgj4T0tKU828cz/vSulWoQezSWeFq6M+7dGnwUWaMxvjvw9qv9rTPTkj4OJJ3XrJyc58P/sea0Xjd6K5RoIG8uneNrZAEnCHC4E0NSjGvdMRhanIiuozJftnncYRAtYi3ti+w2QDnhHYW0Kkg3LBy4jU1spoVNCPWCWzL9/377EzwkZlRv7Dk+NJx0+4F/R antoine@salon81"]
   }
 }

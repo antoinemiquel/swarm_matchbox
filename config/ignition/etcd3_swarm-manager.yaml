@@ -46,6 +46,7 @@ storage:
       contents:
         inline: |
             #!/bin/bash
+            set -x
             HOST=`uname -n`
             ADV_ADR=`/usr/bin/etcdctl get swarm/adv 2>/dev/null`
             if [ "$ADV_ADR" = "" ]
