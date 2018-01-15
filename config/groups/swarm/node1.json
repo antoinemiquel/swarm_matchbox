@@ -1,7 +1,7 @@
 {
   "id": "node1",
   "name": "Node 1",
-  "profile": "etcd3_swarm-manager",
+  "profile": "etcd3_swarm-manager-init",
   "selector": {
     "mac": "52:54:00:a1:9c:ae",
     "os": "installed"

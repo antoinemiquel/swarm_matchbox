@@ -37,13 +37,18 @@ storage:
       contents: 
         inline: |
           {{.etcd_name}}
+    - path: /etc/docker/daemon.json
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+            { "insecure-registries":["172.17.0.1:5000"] }
     - path: /opt/swarm-init
       filesystem: root
       mode: 0500
       contents:
         inline: |
             #!/bin/bash
-            set -x
             HOST=`uname -n`
             IS_WORKER=`/usr/bin/etcdctl get swarm/worker/${HOST}  2>/dev/null`
             if [ "$IS_WORKER" = "1" ]
@@ -56,8 +61,11 @@ storage:
                     ADV=`etcdctl get swarm/adv 2>/dev/null`
                     sleep 1
                 done
+                echo "Token_manager : $TOKEN_WORKER"
+                echo "Adv : $ADV"
                 docker swarm join --token $TOKEN_WORKER $ADV
-                /usr/bin/etcdctl set swarm/worker/${HOST} 1 
+                /usr/bin/etcdctl set swarm/worker/${HOST} 1
+                /usr/bin/etcdctl ls swarm/worker/${HOST}
             fi
 {{ if index . "ssh_authorized_keys" }}
 passwd:

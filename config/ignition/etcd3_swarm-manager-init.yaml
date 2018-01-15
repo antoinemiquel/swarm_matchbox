@@ -52,23 +52,21 @@ storage:
       contents:
         inline: |
             #!/bin/bash
+            set -x
             HOST=`uname -n`
-            IS_MANAGER=`/usr/bin/etcdctl get swarm/manager/${HOST}  2>/dev/null`
-            if [ "$IS_MANAGER" = "1" ]
+            ADV_ADR=`/usr/bin/etcdctl get swarm/adv 2>/dev/null`
+            if [ "$ADV_ADR" = "" ]
             then
-                echo "ok - swarm manager ever define"
-            else
-                while [ "$TOKEN_MANAGER" = "" -o "$ADV" = "" ]
-                do 
-                    TOKEN_MANAGER=`etcdctl get swarm/token_manager 2>/dev/null`
-                    ADV=`etcdctl get swarm/adv 2>/dev/null`
-                    sleep 1
-                done
-                echo "Token_manager : $TOKEN_MANAGER"
-                echo "Adv : $ADV"
-                docker swarm join --token $TOKEN_MANAGER $ADV
+                ADV_ADR=`/usr/bin/dig +short {{.domain_name}}`:2377
+                /usr/bin/etcdctl set swarm/adv ${ADV_ADR}
+                /usr/bin/docker swarm init --advertise-addr $ADV_ADR
+                TOKEN_MANAGER=`/usr/bin/docker swarm join-token manager --quiet`
+                TOKEN_WORKER=`/usr/bin/docker swarm join-token worker --quiet`
+                /usr/bin/etcdctl set swarm/token_manager $TOKEN_MANAGER
+                /usr/bin/etcdctl set swarm/token_worker  $TOKEN_WORKER
                 /usr/bin/etcdctl set swarm/manager/${HOST} 1
-                /usr/bin/etcdctl ls swarm/manager/${HOST}
+            else
+                /usr/bin/docker swarm node ls                   
             fi
 {{ if index . "ssh_authorized_keys" }}
 passwd:
