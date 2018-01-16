@@ -4,8 +4,8 @@
 import cgi
 import socket
 
-hotsname=socket.gethostname()
-ip=socket.gethostbyname(socket.gethostname())
+hostname=socket.gethostname()
+#ip=socket.gethostbyname(hostname)
 
 form = cgi.FieldStorage()
 print("Content-type: text/html; charset=utf-8\n")
@@ -16,10 +16,7 @@ html = """<!DOCTYPE html>
 </head>
 <body>
     <h1>Test page</h1>
-    <h2>Hostname :</h2>
-    """ + hotsname + """
-    <h2>IP :</h2>
-    """ + ip + """
+    <h2>Hostname : """ + hostname + """</h2>
 </body>
 </html>
 """

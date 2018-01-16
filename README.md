@@ -62,8 +62,9 @@ docker image remove 172.17.0.1:5000/web_test
 ```{r, engine='bash'}
 ssh core@node1.example.com
     docker service create --name my_web \
-                          --replicas 3 \
+                          --replicas 4 \
                           --publish published=7000,target=8080 \
+                          --detach=true \
                           172.17.0.1:5000/web_test
 ```
 
@@ -71,3 +72,6 @@ ssh core@node1.example.com
 ```{r, engine='bash'}
 docker run -d --name external_load_balancer -p 80:80 -v $PWD/haproxy:/usr/local/etc/haproxy:ro haproxy:1.8
 ```
+
+## Test app on
+curl http://localhost/index.py 2>/dev/null | grep Hostname
