@@ -32,18 +32,17 @@ sudo ./scripts/libvirt create
 mkdir $PWD/registry/registry
 docker run -d -p 5000:5000 --restart=always --name registry -v $PWD/registry/registry:/var/lib/registry registry:2
 
-## Build nginx_test Docker image :
-docker build -t 172.17.0.1:5000/nginx_test nginx_test
-docker push 172.17.0.1:5000/nginx_test
-docker image remove 172.17.0.1:5000/nginx_test
+## Build web_test (python web page) Docker image :
+docker build -t 172.17.0.1:5000/web_test web_test
+docker push 172.17.0.1:5000/web_test
+docker image remove 172.17.0.1:5000/web_test
 
 ## Run a test swarm service
 ssh core@node1.example.com
     docker service create --name my_web \
                           --replicas 3 \
-                          --publish published=7000,target=80 \
-                          172.17.0.1:5000/nginx_test
+                          --publish published=7000,target=8080 \
+                          172.17.0.1:5000/web_test
 
 ## Configure an external load balancer
 docker run -d --name external_load_balancer -p 80:80 -v $PWD/haproxy:/usr/local/etc/haproxy:ro haproxy:1.8 
-
