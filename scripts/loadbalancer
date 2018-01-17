@@ -1,0 +1,51 @@
+#!/bin/bash
+# Create a local load-balancer
+# Config file : haproxy/haproxy.cfg
+# USAGE: ./scripts/load-balancer create
+# USAGE: ./scripts/load-balancer status
+# USAGE: ./scripts/load-balancer destroy
+set -u
+
+function main {
+  if [ "$#" -eq 0 ]; then
+    usage
+    exit 2
+  fi
+  case "$1" in
+    "create") docker_create;;
+    "status") docker_status;;
+    "destroy") docker_destroy;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+}
+
+function usage {
+  echo "USAGE: ${0##*/} <command>"
+  echo "Commands:"
+  echo -e "\tcreate\tcreate load-balancer"
+  echo -e "\tstatus\tshow the status of load-balancer"
+  echo -e "\tdestroy\tdestroy load-balancer"
+}
+
+function docker_create {
+  echo "Starting load-balancer"
+  docker run --name external_load_balancer \
+    -d \
+    -p 80:80 \
+    -v $PWD/haproxy:/usr/local/etc/haproxy:ro \
+    haproxy:1.8
+}
+
+function docker_status {
+  docker logs external_load_balancer
+}
+
+function docker_destroy {
+  docker stop external_load_balancer
+  docker rm external_load_balancer
+}
+
+main $@

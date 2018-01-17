@@ -1,5 +1,7 @@
 # Test the deployment of a docker swarm on coreos
-## project inspiration : [CoreOs Matchbox](https://github.com/coreos/matchbox)
+## project inspirations : 
+[coreos matchbox](https://github.com/coreos/matchbox)
+[docker swarm](https://docs.docker.com/engine/swarm/)
 ___
 
 ## Set /etc/hosts
@@ -68,10 +70,31 @@ ssh core@node1.example.com
                           172.17.0.1:5000/web_test
 ```
 
-## Configure an external load balancer
+## Launch an external load balancer
 ```{r, engine='bash'}
-docker run -d --name external_load_balancer -p 80:80 -v $PWD/haproxy:/usr/local/etc/haproxy:ro haproxy:1.8
+./scripts/loadbalancer create
 ```
 
-## Test app on
+## Test app
+```{r, engine='bash'}
 curl http://localhost/index.py 2>/dev/null | grep Hostname
+```
+
+___
+
+## stop and clean
+
+### stop load balancer
+```{r, engine='bash'}
+./scripts/loadbalancer destroy
+```
+
+### destroy VMs
+```{r, engine='bash'}
+sudo ./scripts/libvirt destroy
+```
+
+### destroy boot infrastructure
+```{r, engine='bash'}
+sudo ./scripts/devnet destroy
+```
