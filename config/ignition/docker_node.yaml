@@ -1,0 +1,25 @@
+---
+storage:
+  files:
+    - path: /etc/hostname
+      filesystem: root
+      mode: 420
+      contents: 
+        inline: |
+          {{.docker_name}}
+    - path: /etc/docker/daemon.json
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+            { "insecure-registries":["172.17.0.1:5000"] }
+{{ if index . "ssh_authorized_keys" }}
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        {{ range $element := .ssh_authorized_keys }}
+        - {{$element}}
+        {{end}}
+{{end}}
+
